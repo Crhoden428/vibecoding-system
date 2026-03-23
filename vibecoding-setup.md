@@ -1,18 +1,11 @@
 # ============================================================
 # HOW TO USE THIS FILE
 # ============================================================
-# NEW PROJECT:
-#   1. Drop this file into your project folder
-#      (or upload it to a Claude.ai Project)
-#   2. Say: "Read CLAUDE.md and carry out the bootstrap instructions."
-#
-# EXISTING PROJECT (already has a CLAUDE.md):
-#   1. Open your existing CLAUDE.md
-#   2. Paste the contents of this file at the TOP
-#   3. Say: "Read CLAUDE.md and carry out the bootstrap instructions."
-#      Claude will merge the working rules in without overwriting anything.
-#
-# That's it. Claude handles everything else.
+# 1. Drop this file into your project folder
+#    (or upload it to a Claude.ai Project)
+# 2. Say: "Read vibecoding-setup.md and carry out the bootstrap instructions."
+# 3. That's it. Claude handles everything else.
+#    Works for new and existing projects.
 # ============================================================
 
 # [PROJECT NAME] — Claude Code Instructions
@@ -32,18 +25,19 @@ Check whether this is VS Code Claude Code or Claude.ai Projects:
 Proceed with the appropriate path below.
 
 STEP 2 — DETECT EXISTING PROJECT
-Before doing anything else, check if this project already has its own CLAUDE.md
-content beneath this bootstrap block (i.e. the "What This Project Is" section is
-already filled in, or there are project-specific rules present).
+Check whether a CLAUDE.md file already exists in this project folder.
 
-If YES (existing project):
-- Do NOT overwrite any existing content.
-- Merge only: add the Working Rules, Git Workflow, Quality Gates, and Safety Rules
-  sections if they are missing or weaker than what is in this file.
-- Skip asking "what is this project" — the context is already there.
+If CLAUDE.md EXISTS:
+- Read it. Do not overwrite it.
+- Merge the Working Rules, Git Workflow, Quality Gates, and Safety Rules sections
+  from this file into the existing CLAUDE.md — only adding what is missing or weaker.
+- Keep all existing project-specific content exactly as-is.
+- Skip the "what is this project" question — the context is already there.
+- Save the updated CLAUDE.md, then delete vibecoding-setup.md.
 - Proceed directly to hook setup (Step A2) and stack detection (Step A3).
 
-If NO (new project):
+If CLAUDE.md DOES NOT EXIST:
+- This file will become CLAUDE.md at the end of bootstrap (Step A5).
 - Proceed through all steps in order as written.
 
 ─── PATH A: VS CODE CLAUDE CODE ──────────────────────────────
@@ -211,8 +205,9 @@ tech stack." Fill in the sections below from their answer. Also run:
 to get the GitHub repo URL and branch.
 
 STEP A5 — DONE
-Delete the entire BOOTSTRAP INSTRUCTIONS block from this file (from the opening
-<!-- to the closing --> comment). Save the file. Tell the user the system is fully active.
+Remove the entire BOOTSTRAP INSTRUCTIONS block from this file (from the opening
+<!-- to the closing --> comment). Rename this file from vibecoding-setup.md to CLAUDE.md.
+Delete the original vibecoding-setup.md. Tell the user the system is fully active.
 
 ─── PATH B: CLAUDE.AI PROJECTS ──────────────────────────────
 

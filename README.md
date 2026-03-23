@@ -7,18 +7,16 @@ One file. Drop it in. Claude does the rest.
 ## How to use it
 
 **VS Code Claude Code:**
-1. Download `CLAUDE.md` from this repo
+1. Download `vibecoding-setup.md` from this repo
 2. Drop it into your project folder
-3. Open Claude Code and say: **"Read CLAUDE.md and carry out the bootstrap instructions."**
+3. Say: **"Read vibecoding-setup.md and carry out the bootstrap instructions."**
 
 **Claude.ai Projects:**
-1. Download `CLAUDE.md` from this repo
+1. Download `vibecoding-setup.md` from this repo
 2. Upload it to your Claude Project (Add content → upload file)
-3. Say: **"Read CLAUDE.md and carry out the bootstrap instructions."**
+3. Say: **"Read vibecoding-setup.md and carry out the bootstrap instructions."**
 
-That's it. Claude sets up everything — global config, hooks, quality gates, git rules —
-and fills in your project details through conversation. No manual file editing. No
-fishing around your file system.
+Works for new projects and existing ones. Claude detects the situation and handles it.
 
 ---
 
@@ -34,17 +32,7 @@ fishing around your file system.
 
 ---
 
-## What's in the box
-
-Just one file: `CLAUDE.md`
-
-It contains everything — the bootstrap instructions Claude follows on first run,
-and the working rules that apply to every session after. The GitHub repo and this
-README exist only so you have a permanent place to get the file and share it.
-
----
-
 ## Sharing with someone
 
-Send them this link. Tell them to follow the two steps above.
+Send them this link and the two steps above.
 `https://github.com/Crhoden428/vibecoding-system`
