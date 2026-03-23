@@ -1,6 +1,6 @@
 # Vibecoding System — Claude Code Setup
 
-A portable, stack-agnostic system for collaborating with Claude Code. Clone this repo, copy 3 files, and every project you start will have enforced quality gates, parallel agents, and a safe git workflow — automatically.
+A portable, stack-agnostic system for collaborating with Claude Code. Clone this repo, copy a few files, and every project you touch will have enforced quality gates, parallel agents, and a safe git workflow — automatically, with no approval popups.
 
 ---
 
@@ -8,10 +8,10 @@ A portable, stack-agnostic system for collaborating with Claude Code. Clone this
 
 ```
 vibecoding-system/
-├── UNIVERSAL_SEED.md          ← copy to any project as CLAUDE.md
+├── CLAUDE.md                  ← the template — copy into any project as CLAUDE.md
 ├── global-setup/
-│   ├── settings.json          ← copy to ~/.claude/  (one-time per machine)
-│   └── statusline-command.sh  ← copy to ~/.claude/  (one-time per machine)
+│   ├── settings.json          ← copy to ~/.claude/ once per machine
+│   └── statusline-command.sh  ← copy to ~/.claude/ once per machine
 └── hooks/
     ├── analyze-on-edit.sh     ← fires on every file edit
     ├── block-dangerous.sh     ← blocks force push + prod ops
@@ -25,52 +25,82 @@ vibecoding-system/
 
 ---
 
-## Setup (One Time Per Machine)
+## One-Time Machine Setup
 
-1. Clone this repo or download the files
-2. Copy `global-setup/settings.json` → `C:\Users\[you]\.claude\settings.json`
-3. Copy `global-setup/statusline-command.sh` → `C:\Users\[you]\.claude\statusline-command.sh`
-4. Copy `UNIVERSAL_SEED.md` → `C:\Users\[you]\.claude\UNIVERSAL_SEED.md`
-5. Reload VS Code: `Ctrl+Shift+P` → `Developer: Reload Window`
+Do this once. It applies to every project.
 
-That's it. The status bar activates and Claude will auto-approve actions.
+```bash
+git clone https://github.com/Crhoden428/vibecoding-system.git
+cd vibecoding-system
+
+cp global-setup/settings.json ~/.claude/settings.json
+cp global-setup/statusline-command.sh ~/.claude/statusline-command.sh
+mkdir -p ~/.claude/hooks
+cp hooks/block-dangerous.sh ~/.claude/hooks/
+chmod +x ~/.claude/hooks/block-dangerous.sh ~/.claude/statusline-command.sh
+```
+
+Then in VS Code: `Ctrl+Shift+P` → `Developer: Reload Window`
+
+The status bar activates. Claude auto-approves all actions. Dangerous git ops are blocked globally.
 
 ---
 
-## Starting a New Project
+## New Project Setup
 
-1. Copy `UNIVERSAL_SEED.md` into your project root and rename it `CLAUDE.md`
-2. Copy the `hooks/` folder contents into your project's `.claude/hooks/`
-3. Copy `hooks/settings-template.json` to your project's `.claude/settings.json`
-4. Open Claude Code and describe what you're building
-5. Claude detects your tech stack, proposes the right lint/test hooks, and asks you to confirm
-6. Done — quality gates, git rules, and agents are all live
+```bash
+# From your project root:
+cp /path/to/vibecoding-system/CLAUDE.md CLAUDE.md
+mkdir -p .claude/hooks .claude/rules
+cp /path/to/vibecoding-system/hooks/analyze-on-edit.sh .claude/hooks/
+cp /path/to/vibecoding-system/hooks/block-dangerous.sh .claude/hooks/
+cp /path/to/vibecoding-system/hooks/quality-gate.sh .claude/hooks/
+cp /path/to/vibecoding-system/hooks/settings-template.json .claude/settings.json
+chmod +x .claude/hooks/*.sh
+```
+
+Open Claude Code and say:
+> "Read CLAUDE.md and help me fill it in for this project, then generate the stack quality hooks."
+
+Claude detects your stack, fills in the project-specific sections through conversation, generates the lint/test stubs, and asks you to confirm. Done.
+
+---
+
+## Existing Project (Already Has a CLAUDE.md)
+
+Don't overwrite it. Instead, tell Claude:
+
+> "Merge the working rules from [vibecoding-system]/CLAUDE.md into my existing CLAUDE.md. Keep all project-specific content. Add the multiagent, git workflow, and quality gate sections if they're missing or weaker."
+
+Claude reads both files and merges them. Your project context stays intact; the working rules get added or upgraded.
+
+Then copy the hooks as above.
 
 ---
 
 ## How Stack Detection Works
 
-The hooks (`analyze-on-edit.sh`, `quality-gate.sh`) are stack-agnostic. They delegate to 3 small stub files that Claude generates for your specific project:
+The three universal hooks delegate to small stub files Claude generates for your stack:
 
-| File | What it does |
+| Stub | What it does |
 |------|-------------|
-| `.claude/hooks/on-edit-lint.sh` | Lints the file just edited (receives filepath as $1) |
-| `.claude/hooks/run-lint.sh` | Full project lint (called by quality gate) |
-| `.claude/hooks/run-tests.sh` | Full test run (called by quality gate) |
+| `.claude/hooks/on-edit-lint.sh` | Lints the file just edited (receives filepath as `$1`) |
+| `.claude/hooks/run-lint.sh` | Full project lint (called at quality gate) |
+| `.claude/hooks/run-tests.sh` | Full test suite (called at quality gate) |
 
-Claude generates these automatically after detecting your stack. See `hooks/stack-examples/` for reference implementations.
+Claude generates these after detecting your stack. See `hooks/stack-examples/` for reference.
 
 ---
 
 ## What You Get
 
-- **No approval popups** — Claude works automatically
-- **Live VS Code status bar** — see exactly what Claude is doing in real-time
-- **Lint on every edit** — bad code is caught immediately, not at session end
+- **No approval popups** — Claude edits, runs bash, and tests without asking
+- **Live VS Code status bar** — see what Claude is doing in real-time
+- **Lint on every edit** — bad code caught immediately, not at session end
 - **Quality gate before done** — Claude can't declare victory with failing tests or lint errors
-- **Force push blocked** — destructive git ops require explicit approval
-- **Git history** — conventional commits make every change self-documenting
-- **Parallel agents** — research, coding, and testing run simultaneously
+- **Force push blocked** — destructive git ops stopped before they run
+- **Parallel agents** — research, coding, and testing run simultaneously by default
+- **Conventional commits** — every change is self-documenting
 
 ---
 
