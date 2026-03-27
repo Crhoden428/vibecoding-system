@@ -327,6 +327,34 @@ Types: `feat` `fix` `chore` `refactor` `docs` `test` `deploy`
 
 ---
 
+## Deployed Infrastructure Rules
+
+**Storage buckets — check before you upload or change paths.**
+Never upload to a new folder path or change a download URL without first verifying:
+- What bucket policies exist (public/private, which paths are accessible)
+- Whether the destination path already has files at it
+- Whether subfolders inherit permissions or need separate policies
+If you can't verify this from existing docs or migrations, stop and ask.
+
+**External service connections — check before you push.**
+Before pushing to any repo connected to CI/CD (Vercel, Netlify, Cloudflare Pages, GitHub Actions):
+- Know what services are watching that repo
+- Know whether a push will trigger a deploy and to where
+- If multiple services are connected (e.g. both Vercel and Cloudflare Pages), flag it
+
+**URL/path changes on live infrastructure — verify accessibility first.**
+If changing a URL, file path, or storage key that is referenced by a live deployed site:
+- Test that the new destination is reachable before shipping the code change
+- Do not assume new paths inherit the same permissions as old ones
+- If you can't test it, say so explicitly instead of proceeding
+
+**Confidence rule.**
+If you don't know something with high confidence — especially around permissions,
+external service behavior, or live infrastructure — say so before executing.
+Do not proceed confidently and discover the gap after the fact.
+
+---
+
 ## Build & Run Commands
 <!-- Filled in during bootstrap -->
 
